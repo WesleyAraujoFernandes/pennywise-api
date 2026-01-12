@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import br.com.knowledgesoutionstecnology.pennywise.dto.EntradaDTO;
-import br.com.knowledgesoutionstecnology.pennywise.exception.DespesaDuplicadaException;
+import br.com.knowledgesoutionstecnology.pennywise.exception.EntradaDuplicadaException;
 import br.com.knowledgesoutionstecnology.pennywise.model.Entrada;
 import br.com.knowledgesoutionstecnology.pennywise.repository.EntradaRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class EntradaService {
     public EntradaDTO createEntrada(EntradaDTO dto) {
         boolean exists = entradaRepository.existsByDescricaoAndData(dto.getDescricao(), dto.getData());
         if (exists) {
-            throw new DespesaDuplicadaException(
+            throw new EntradaDuplicadaException(
                     "Já existe uma entrada com a descrição: " + dto.getDescricao() + " para a data: " + dto.getData());
         }
         Entrada entrada = Entrada.builder()
