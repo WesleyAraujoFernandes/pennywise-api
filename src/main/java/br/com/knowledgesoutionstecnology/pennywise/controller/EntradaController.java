@@ -1,0 +1,54 @@
+package br.com.knowledgesoutionstecnology.pennywise.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.knowledgesoutionstecnology.pennywise.dto.EntradaDTO;
+import br.com.knowledgesoutionstecnology.pennywise.service.EntradaService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/entradas")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
+public class EntradaController {
+
+    private final EntradaService entradaService;
+
+    @PostMapping
+    public ResponseEntity<EntradaDTO> createEntrada(@Valid @RequestBody EntradaDTO dto) {
+        return ResponseEntity.ok(entradaService.createEntrada(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EntradaDTO>> getAllEntradas() {
+        return ResponseEntity.ok(entradaService.getAllEntradas());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EntradaDTO> getEntradaById(@PathVariable Long id) {
+        return ResponseEntity.ok(entradaService.getEntradaById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EntradaDTO> updateEntrada(@PathVariable Long id, @Valid @RequestBody EntradaDTO dto) {
+        return ResponseEntity.ok(entradaService.updateEntrada(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEntrada(@PathVariable Long id) {
+        entradaService.deleteEntrada(id);
+        return ResponseEntity.noContent().build();
+    }
+}

@@ -3,7 +3,7 @@ package br.com.knowledgesoutionstecnology.pennywise.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import br.com.knowledgesoutionstecnology.pennywise.model.CategoriaDespesa;
+import br.com.knowledgesoutionstecnology.pennywise.model.CategoriaEntrada;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,5 +29,5 @@ public class EntradaDTO {
     @NotNull(message = "Data é obrigatória")
     private LocalDate data;
     @NotNull(message = "Categoria é obrigatória")
-    private CategoriaDespesa categoria;
+    private CategoriaEntrada categoria;
 }
