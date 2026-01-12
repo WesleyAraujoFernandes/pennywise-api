@@ -1,0 +1,52 @@
+package br.com.knowledgesoutionstecnology.pennywise.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.knowledgesoutionstecnology.pennywise.dto.DespesaDTO;
+import br.com.knowledgesoutionstecnology.pennywise.service.DespesaService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/despesas")
+@RequiredArgsConstructor
+public class DespesaController {
+
+    private final DespesaService despesaService;
+
+    @PostMapping
+    public ResponseEntity<DespesaDTO> createDespesa(@Valid @RequestBody DespesaDTO dto) {
+        return ResponseEntity.ok(despesaService.createDespesa(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DespesaDTO>> getAllDespesas() {
+        return ResponseEntity.ok(despesaService.getAllDespesas());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DespesaDTO> getDespesaById(@PathVariable Long id) {
+        return ResponseEntity.ok(despesaService.getDespesaById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DespesaDTO> updateDespesa(@PathVariable Long id, @Valid @RequestBody DespesaDTO dto) {
+        return ResponseEntity.ok(despesaService.updateDespesa(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDespesa(@PathVariable Long id) {
+        despesaService.deleteDespesa(id);
+        return ResponseEntity.noContent().build();
+    }
+}
