@@ -9,5 +9,4 @@ public class PennywiseApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PennywiseApplication.class, args);
 	}
-
 }
