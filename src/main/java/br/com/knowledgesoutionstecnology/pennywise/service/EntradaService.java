@@ -1,8 +1,10 @@
 package br.com.knowledgesoutionstecnology.pennywise.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.knowledgesoutionstecnology.pennywise.dto.EntradaDTO;
@@ -61,6 +63,10 @@ public class EntradaService {
         entradaRepository.deleteById(id);
     }
 
+    public List<EntradaDTO> listarPorPeriodo(LocalDate dataInicio, LocalDate dataFim) {
+        return entradaRepository.findByData(dataInicio, dataFim).stream().map(this::mapToDTO).toList();
+    }
+
     private EntradaDTO mapToDTO(Entrada entrada) {
         return EntradaDTO.builder()
                 .id(entrada.getId())
@@ -70,4 +76,5 @@ public class EntradaService {
                 .categoria(entrada.getCategoria())
                 .build();
     }
+
 }

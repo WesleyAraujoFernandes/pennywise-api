@@ -1,5 +1,6 @@
 package br.com.knowledgesoutionstecnology.pennywise.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import br.com.knowledgesoutionstecnology.pennywise.dto.EntradaDTO;
 import br.com.knowledgesoutionstecnology.pennywise.service.EntradaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/entradas")
@@ -34,6 +36,12 @@ public class EntradaController {
     @GetMapping
     public ResponseEntity<List<EntradaDTO>> getAllEntradas() {
         return ResponseEntity.ok(entradaService.getAllEntradas());
+    }
+
+    @GetMapping("/periodo")
+    public ResponseEntity<List<EntradaDTO>> getEntradaPorPeriodo(@RequestParam(required = false) LocalDate dataInicio,
+            @RequestParam(required = false) LocalDate dataFim) {
+        return ResponseEntity.ok(entradaService.listarPorPeriodo(dataInicio, dataFim));
     }
 
     @GetMapping("/{id}")
