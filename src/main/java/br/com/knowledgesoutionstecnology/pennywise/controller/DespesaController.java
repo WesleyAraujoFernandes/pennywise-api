@@ -1,5 +1,6 @@
 package br.com.knowledgesoutionstecnology.pennywise.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.knowledgesoutionstecnology.pennywise.dto.DespesaDTO;
+import br.com.knowledgesoutionstecnology.pennywise.dto.EntradaDTO;
 import br.com.knowledgesoutionstecnology.pennywise.service.DespesaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,12 @@ public class DespesaController {
     @GetMapping
     public ResponseEntity<List<DespesaDTO>> getAllDespesas() {
         return ResponseEntity.ok(despesaService.getAllDespesas());
+    }
+
+    @GetMapping("/periodo")
+    public ResponseEntity<List<DespesaDTO>> getEntradaPorPeriodo(@RequestParam(required = false) LocalDate dataInicio,
+            @RequestParam(required = false) LocalDate dataFim) {
+        return ResponseEntity.ok(despesaService.listarPorPeriodo(dataInicio, dataFim));
     }
 
     @GetMapping("/{id}")

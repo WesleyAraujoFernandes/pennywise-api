@@ -1,11 +1,13 @@
 package br.com.knowledgesoutionstecnology.pennywise.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import br.com.knowledgesoutionstecnology.pennywise.dto.DespesaDTO;
+import br.com.knowledgesoutionstecnology.pennywise.dto.EntradaDTO;
 import br.com.knowledgesoutionstecnology.pennywise.exception.DespesaDuplicadaException;
 import br.com.knowledgesoutionstecnology.pennywise.model.Despesa;
 import br.com.knowledgesoutionstecnology.pennywise.repository.DespesaRepository;
@@ -59,6 +61,10 @@ public class DespesaService {
 
     public void deleteDespesa(Long id) {
         despesaRepository.deleteById(id);
+    }
+
+    public List<DespesaDTO> listarPorPeriodo(LocalDate dataInicio, LocalDate dataFim) {
+        return despesaRepository.findByData(dataInicio, dataFim).stream().map(this::mapToDTO).toList();
     }
 
     private DespesaDTO mapToDTO(Despesa despesa) {
